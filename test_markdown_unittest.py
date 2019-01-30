@@ -36,6 +36,40 @@ class TestMarkdownPy(unittest.TestCase):
                 run_markdown('**this should be wrapped in strong tags**'),
                 '<p><strong>this should be wrapped in strong tags</strong></p>')
 
+    def test_head1(self):
+        '''
+        Lines starting with # should be replaced by <h1> </h1> tags
+        '''
+        self.assertEqual(
+                run_markdown('# this should be wrapped in h1 tags'),
+                '<p><h1>this should be wrapped in h1 tags</h1></p>')
+
+    def test_head2(self):
+        '''
+        Lines starting with ## should be replaced by <h1> </h1> tags
+        '''
+        self.assertEqual(
+                run_markdown('## this should be wrapped in h2 tags'),
+                '<p><h2>this should be wrapped in h2 tags</h2></p>')
+
+    def test_head3(self):
+        '''
+        Lines starting with ### should be replaced by <h1> </h1> tags
+        '''
+        self.assertEqual(
+                run_markdown('### this should be wrapped in h3 tags'),
+                '<p><h3>this should be wrapped in h3 tags</h3></p>')
+
+    def test_block(self):
+        '''
+        The first line starting with > should be replaced with <blockquote> until another line is processed without a > , at which time 
+        </blockquote> is added to the end
+        '''
+        self.assertEqual(
+                run_markdown('> this should be wrapped in block quotes\n\n'),
+                '<p><blockquote>this should be wrapped in block quotes </blockquote></p>')
+
+
 if __name__ == '__main__':
     unittest.main()
 
